@@ -32,7 +32,8 @@ resource "azurerm_virtual_network" "vnet" {
   }
 
   resource "azurerm_network_interface" "nic" {
-  name                = "trainigvmnic01"
+  count               = 2
+  name                = "trainigvmnic${var.count_offset}${count.index + 1}"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.rg.name}"
 
@@ -48,10 +49,11 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_virtual_machine" "vm" {
-  name                  = "trainigvm01"
+  count                 = 2
+  name                  = "trainigvm${var.count_offset}${count.index + 1}"
   location              = "${var.location}"
   resource_group_name   = "${azurerm_resource_group.rg.name}"
-  network_interface_ids = ["${azurerm_network_interface.nic.id}"]
+  network_interface_ids = ["${element(azurerm_network_interface.nic.*.id, count.index)}"]
   vm_size               = "Standard_D1"
 
   # Uncomment this line to delete the OS disk automatically when deletingB4ms
@@ -68,7 +70,7 @@ resource "azurerm_virtual_machine" "vm" {
     version   = "latest"
   }
   storage_os_disk {
-    name              = "trainingvm01-osdisk"
+    name              = "trainingvm${var.count_offset}${count.index + 1}-osdisk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"

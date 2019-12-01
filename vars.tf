@@ -10,3 +10,6 @@ variable "rg_name" {
 }
 variable "location" {
 }
+variable "count_offset" {
+  default = 0
+}
