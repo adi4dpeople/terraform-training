@@ -2,15 +2,15 @@ provider "azurerm" {
   # Whilst version is optional, we /strongly recommend/ using it to pin the version of the Provider being used
   # version = "=1.36.0"
 
-  subscription_id = "xxxxx"
-  client_id       = "xxxxx"
-  client_secret   = "xxxxx"
-  tenant_id       = "xxxxx"
+  subscription_id = "${var.subscription_id}"
+  client_id       = "${var.client_id}"
+  client_secret   = "${var.client_secret}"
+  tenant_id       = "${var.tenant_id}"
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "trainingrg"
-  location = "West US"
+  name     = "${var.rg_name}"
+  location = "${var.location}"
 
   tags = {
     environment = "Training"
@@ -19,7 +19,7 @@ resource "azurerm_resource_group" "rg" {
 
 resource "azurerm_virtual_network" "vnet" {
   name                = "trainingvnet"
-  location            = "West US"
+  location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.rg.name}"
   address_space       = ["10.0.0.0/16"]
   }
@@ -33,7 +33,7 @@ resource "azurerm_virtual_network" "vnet" {
 
   resource "azurerm_network_interface" "nic" {
   name                = "trainigvmnic01"
-  location            = "West US"
+  location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.rg.name}"
 
   ip_configuration {
@@ -49,7 +49,7 @@ resource "azurerm_virtual_network" "vnet" {
 
 resource "azurerm_virtual_machine" "vm" {
   name                  = "trainigvm01"
-  location              = "West US"
+  location              = "${var.location}"
   resource_group_name   = "${azurerm_resource_group.rg.name}"
   network_interface_ids = ["${azurerm_network_interface.nic.id}"]
   vm_size               = "Standard_D1"
