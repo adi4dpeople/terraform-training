@@ -87,3 +87,21 @@ resource "azurerm_virtual_machine" "vm" {
     environment = "Training"
   }
 }
+
+resource "azurerm_managed_disk" "md" {
+  count                = 2
+  name                 = "trainingvm${var.count_offset}${count.index +1}-datadisk"
+  location             = "${var.location}"
+  resource_group_name  = "${azurerm_resource_group.rg.name}"
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = "10"
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "da" {
+  count              = 2
+  managed_disk_id    = "${element(azurerm_managed_disk.md.*.id,count.index)}"
+  virtual_machine_id = "${element(azurerm_virtual_machine.vm.*.id,count.index)}"
+  lun                = "${count.index +1}"
+  caching            = "ReadWrite"
+}
