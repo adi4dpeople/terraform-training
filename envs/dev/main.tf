@@ -17,7 +17,7 @@ module "devsubnet1" {
   subnet_name = "${var.dev_subnet_name}"
   resource_group_name = "${module.devrg1.name}"
   vnet_name  = "${module.devvnet1.name}"
-  subnet_address_prefixes = "${var.dev_subnet_address_prefixes}"
+  subnet_address_prefixes = ["${var.dev_subnet_address_prefixes[0]}"]
 }
 
 module "devsubnet2" {
@@ -25,5 +25,5 @@ module "devsubnet2" {
   subnet_name = "${var.dev_subnet_name2}"
   resource_group_name = "${module.devrg1.name}"
   vnet_name  = "${module.devvnet1.name}"
-  subnet_address_prefixes = "${var.dev_subnet_address_prefixes2}"
+  subnet_address_prefixes = ["${var.dev_subnet_address_prefixes[1]}"]
 }

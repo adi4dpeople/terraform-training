@@ -26,10 +26,7 @@ variable "dev_subnet_name" {
   default = ""
 }
 variable "dev_subnet_address_prefixes" {
-  default = ""
-}
-variable "dev_subnet_address_prefixes2" {
-  default = ""
+  default = [""]
 }
 variable "dev_subnet_name2" {
   default = ""

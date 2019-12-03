@@ -11,5 +11,5 @@ variable "vnet_name" {
   default = ""
 }
 variable "subnet_address_prefixes" {
-  default = ""
+  default = [""]
 }
