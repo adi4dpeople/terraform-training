@@ -18,6 +18,7 @@ module "devsubnet1" {
   resource_group_name     = "${module.devrg1.name}"
   vnet_name               = "${module.devvnet1.name}"
   subnet_address_prefixes = ["${var.dev_subnet_address_prefixes[0]}"]
+  route_table_id          = "${module.fwrt.id}"
 }
 
 module "devsubnet2" {
@@ -80,4 +81,26 @@ module "vm1" {
   image_offer         = "${var.image_offer}"
   image_sku           = "${var.image_sku}"
   image_version       = "${var.image_version}"
+}
+
+module "fwrt" {
+  source = "../../route_table"
+  rt_name = "${var.rt_name}"
+  location = "${var.dev_location}"
+  resource_group_name = "${module.devrg1.name}"
+  udr_name = "${var.udr_name}"
+  udr_address_prefix = "${var.udr_address_prefix}"
+  udr_next_hop_type = "${var.udr_next_hop_type}"
+  udr_next_hop_in_ip_address = "${var.udr_next_hop_in_ip_address}"
+}
+
+module "rt" {
+  source = "../../route_table"
+  rt_name = "${var.rt_name1}"
+  location = "${var.dev_location}"
+  resource_group_name = "${module.devrg1.name}"
+  udr_name = "${var.udr_name}"
+  udr_address_prefix = "${var.udr_address_prefix}"
+  udr_next_hop_type = "${var.udr_next_hop_type}"
+  udr_next_hop_in_ip_address = "${var.udr_next_hop_in_ip_address}"
 }

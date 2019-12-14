@@ -4,4 +4,5 @@ resource "azurerm_subnet" "subnet" {
   resource_group_name  = "${var.resource_group_name}"
   virtual_network_name = "${var.vnet_name}"
   address_prefix       = "${element(var.subnet_address_prefixes,count.index)}"
+  route_table_id       = "${var.route_table_id}"
 }

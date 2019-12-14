@@ -17,3 +17,6 @@ variable "vnet_name" {
 variable "subnet_address_prefixes" {
   default = [""]
 }
+variable "route_table_id" {
+  default = ""
+}

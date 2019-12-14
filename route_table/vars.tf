@@ -21,3 +21,6 @@ variable "udr_address_prefix" {
 variable "udr_next_hop_type" {
   default = ""
 }
+variable "udr_next_hop_in_ip_address" {
+  default = ""
+}
