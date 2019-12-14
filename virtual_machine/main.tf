@@ -41,6 +41,7 @@ resource "azurerm_virtual_machine" "vm" {
     disable_password_authentication = false
   }
 }
+
 resource "azurerm_managed_disk" "md" {
   count                = "${var.vm_instances_count}"
   name                 = "${var.vm_name}${format(var.count_format, var.count_offset + count.index + 1)}-DATADISK"

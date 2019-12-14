@@ -2,14 +2,18 @@ variable "admin_password" {}
 variable "admin_username" {}
 variable "client_id" {}
 variable "client_secret" {}
+
 variable "dev_subnet_address_prefixes" {
   default = [""]
 }
+
 variable "dev_subnet_name" {}
 variable "dev_subnet_name2" {}
+
 variable "dev_vnet_address_space" {
   default = [""]
 }
+
 variable "devrg_name" {}
 variable "devvnet_name" {}
 variable "disk_size_gb" {}
